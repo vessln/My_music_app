@@ -7,22 +7,22 @@ from my_music_app_project.profiles.models import Profile
 
 
 def get_current_profile():
-    profile = Profile.objects.all() or None
+    profile = Profile.objects.get() or None
 
     return profile
 
 
-class HomePage(views.TemplateView):
+class HomePageView(views.TemplateView):
     def get(self, request, *args, **kwargs):
         profile = get_current_profile()
 
         if profile is None:
-            return HomeNoProfilePage.as_view()(request)
+            return HomeNoProfilePageView.as_view()(request)
 
-        return HomeWithProfilePage.as_view()(request)
+        return HomeWithProfilePageView.as_view()(request)
 
 
-class HomeNoProfilePage(views.CreateView):
+class HomeNoProfilePageView(views.CreateView):
     model = Profile
     fields = "__all__"
     template_name = "common/home-no-profile.html"
@@ -41,14 +41,13 @@ class HomeNoProfilePage(views.CreateView):
         return form
 
 
-class HomeWithProfilePage(views.ListView):
+class HomeWithProfilePageView(views.ListView):
     model = Album
     fields = "__all__"
     template_name = "common/home-with-profile.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-
         context["current_profile"] = get_current_profile()
 
         return context

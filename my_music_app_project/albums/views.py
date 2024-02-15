@@ -7,7 +7,7 @@ from my_music_app_project.common.views import get_current_profile
 from my_music_app_project.profiles.models import Profile
 
 
-class CreateAlbum(views.CreateView):
+class CreateAlbumView(views.CreateView):
     model = Album
     fields = ["album_name", "artist", "genre", "description", "image_url", "price"]
     template_name = "album/album-add.html"
@@ -38,28 +38,46 @@ class CreateAlbum(views.CreateView):
         return super().form_valid(form)
 
 
-class DetailsAlbum(views.DetailView):
+class DetailsAlbumView(views.DetailView):
     model = Album
-    fields = "__all__"
     template_name = "album/album-details.html"
 
-    def get_object(self, queryset=None):
-        return Album.objects.first()
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #
+    #     album_pk = self.request.GET.get("pk", None)
+    #     if album_pk is not None:
+    #         queryset = queryset.filter(pk=album_pk)
+    #
+    #     return queryset
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["current_profile"] = get_current_profile()
+    #
+    #     return context
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["album"] = Album.objects.first()
 
-        return context
-
-
-class EditAlbum(views.UpdateView):
+class EditAlbumView(views.UpdateView):
     model = Album
-    fields = "__all__"
+    fields = ["album_name", "artist", "genre", "description", "image_url", "price"]
     template_name = "album/album-edit.html"
+    success_url = reverse_lazy("home page")
+
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["current_profile"] = get_current_profile()
+    #
+    #     return context
+    #
+    # def form_valid(self, form):
+    #     form.save()
+    #     return super().form_valid(form)
 
 
-class DeleteAlbum(views.DeleteView):
+class DeleteAlbumView(views.DeleteView):
     model = Album
-    fields = "__all__"
     template_name = "album/album-delete.html"
+    success_url = reverse_lazy("home page")
+
+

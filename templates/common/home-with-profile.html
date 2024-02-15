@@ -5,14 +5,15 @@
 {% block main_content %}
 
     <section id="catalogPage">
-    {{ current_profile }}
+
         {% if not object_list %}
+
             <p>No Albums in Catalog!</p>
 
         {% else %}
 
         <h1>All Albums</h1>
-            {%  for album in object_list %}
+            {% for album in object_list %}
 
                 <div class="card-box">
                   <img src="{{ album.image_url }}" alt="Cover Image" />
@@ -32,6 +33,7 @@
             {% endfor %}
 
         {% endif %}
+
     </section>
 
 {% endblock %}
