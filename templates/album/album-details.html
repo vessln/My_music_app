@@ -4,27 +4,30 @@
 
 {% block main_content %}
 
-      <section id="detailsPage">
+    <section id="detailsPage">
         <div class="wrapper">
-          <div class="albumCover">
-            <img src="{{ object.image_url }}" alt="Cover Image" />
-          </div>
-
-          <div class="albumInfo">
-              <div class="albumText">
-                  <h1>Name: {{ object.album_name }}</h1>
-                  <h3>Artist: {{ object.artist }}</h3>
-                  <h4>Genre: {{ object.genre }}</h4>
-                  <h4>Price: ${{ object.price|floatformat:2 }}</h4>
-                  <p>Description: {{ object.description }}</p>
-              </div>
-
-            <div class="actionBtn">
-              <a href="{% url 'edit album' pk=object.pk %}" class="edit">Edit</a>
-              <a href="{% url 'delete album' pk=object.pk %}" class="remove">Delete</a>
+            <div class="albumCover">
+                <img src="{{ object.image_url }}" alt="Cover Image" />
             </div>
-          </div>
+
+            <div class="albumInfo">
+                <div class="albumText">
+                    <h1>Name: {{ object.album_name }}</h1>
+                    <h3>Artist: {{ object.artist }}</h3>
+                    <h4>Genre: {{ object.genre }}</h4>
+                    <h4>Price: ${{ object.price|floatformat:2 }}</h4>
+                    {% if object.description %}
+                        <p>Description: {{ object.description }}</p>
+                    {% endif %}
+                </div>
+
+                <div class="actionBtn">
+                    <a href="{% url 'edit album' pk=object.pk %}" class="edit">Edit</a>
+                    <a href="{% url 'delete album' pk=object.pk %}" class="remove">Delete</a>
+                </div>
+
+            </div>
         </div>
-      </section>
+    </section>
 
 {% endblock %}

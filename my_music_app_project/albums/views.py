@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.urls import reverse_lazy
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views import generic as views
 
+from my_music_app_project.albums.forms import DeleteAlbumForm
 from my_music_app_project.albums.models import Album
 from my_music_app_project.common.views import get_current_profile
 from my_music_app_project.profiles.models import Profile
@@ -42,6 +44,12 @@ class DetailsAlbumView(views.DetailView):
     model = Album
     template_name = "album/album-details.html"
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_profile"] = get_current_profile()
+
+        return context
+
     # def get_queryset(self):
     #     queryset = super().get_queryset()
     #
@@ -50,12 +58,6 @@ class DetailsAlbumView(views.DetailView):
     #         queryset = queryset.filter(pk=album_pk)
     #
     #     return queryset
-    #
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["current_profile"] = get_current_profile()
-    #
-    #     return context
 
 
 class EditAlbumView(views.UpdateView):
@@ -64,12 +66,12 @@ class EditAlbumView(views.UpdateView):
     template_name = "album/album-edit.html"
     success_url = reverse_lazy("home page")
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["current_profile"] = get_current_profile()
-    #
-    #     return context
-    #
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_profile"] = get_current_profile()
+
+        return context
+
     # def form_valid(self, form):
     #     form.save()
     #     return super().form_valid(form)
@@ -77,7 +79,20 @@ class EditAlbumView(views.UpdateView):
 
 class DeleteAlbumView(views.DeleteView):
     model = Album
+    form_class = DeleteAlbumForm
     template_name = "album/album-delete.html"
     success_url = reverse_lazy("home page")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["current_profile"] = get_current_profile()
+        context["form"] = DeleteAlbumForm(instance=self.get_object())
+
+        return context
+
+
+
+
+
 
 

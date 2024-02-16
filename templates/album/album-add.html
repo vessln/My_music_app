@@ -4,22 +4,19 @@
 
 {% block main_content %}
 
-      <section class="createPage">
+    <section class="createPage">
 
         <form action="{% url 'create album' %}" method="post">
-          <fieldset>
+            <fieldset>
             <legend>Add Album</legend>
-            <div class="container">
-
-                {{ form }}
-
-                {% csrf_token %}
-
-              <button class="add-album" type="submit">Add New Album</button>
-            </div>
-          </fieldset>
+                <div class="container">
+                    {{ form }}
+                    {% csrf_token %}
+                    <button class="add-album" type="submit">Add New Album</button>
+                </div>
+            </fieldset>
         </form>
 
-      </section>
+    </section>
 
 {% endblock %}

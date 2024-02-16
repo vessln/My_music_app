@@ -4,14 +4,14 @@ from django.db import models
 from my_music_app_project.profiles.models import Profile
 
 GENRE_CHOICES = [
-    ("pop", "Pop Music"),
-    ("jazz", "Jazz Music"),
-    ("rb", "R&B Music"),
-    ("rock", "Rock Music"),
-    ("country", "Country Music"),
-    ("dance", "Dance Music"),
-    ("hiphop", "Hip Hop Music"),
-    ("other", "Other"),
+    ("Pop Music", "Pop Music"),
+    ("Jazz Music", "Jazz Music"),
+    ("R&B Music", "R&B Music"),
+    ("Rock Music", "Rock Music"),
+    ("Country Music", "Country Music"),
+    ("Dance Music", "Dance Music"),
+    ("Hip Hop Music", "Hip Hop Music"),
+    ("Other", "Other"),
 ]
 
 

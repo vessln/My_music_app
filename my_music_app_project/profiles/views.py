@@ -13,7 +13,7 @@ class ProfileDetails(views.DetailView):
     template_name = "profile/profile-details.html"
 
     def get_object(self, queryset=None):
-        return Profile.objects.first()
+        return get_current_profile()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -30,7 +30,7 @@ class ProfileDelete(views.DeleteView):
     success_url = reverse_lazy("home page")
 
     def get_object(self, queryset=None):
-        return Profile.objects.first()
+        return get_current_profile()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
