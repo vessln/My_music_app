@@ -7,9 +7,7 @@ from my_music_app_project.profiles.models import Profile
 
 
 def get_current_profile():
-    profile = Profile.objects.get() or None
-
-    return profile
+    return Profile.objects.all().first() or None
 
 
 class HomePageView(views.TemplateView):
@@ -27,9 +25,6 @@ class HomeNoProfilePageView(views.CreateView):
     fields = "__all__"
     template_name = "common/home-no-profile.html"
     success_url = reverse_lazy("home page")
-
-    # def get_success_url(self):
-    #     return redirect(request.META["HTTP_REFERER"])
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)

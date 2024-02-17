@@ -79,7 +79,7 @@ class EditAlbumView(views.UpdateView):
 
 class DeleteAlbumView(views.DeleteView):
     model = Album
-    form_class = DeleteAlbumForm
+    # form_class = DeleteAlbumForm
     template_name = "album/album-delete.html"
     success_url = reverse_lazy("home page")
 

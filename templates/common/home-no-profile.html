@@ -4,29 +4,29 @@
 
 {% block main_content %}
 
-      <div class="container-inline">
+    <div class="container-inline">
         <section id="welcomePage">
-          <div id="welcome-message">
-            <h1>Welcome to</h1>
-            <h1>My Music App!</h1>
-          </div>
-          <div class="music-img">
-            <img src="{% static '/images/musicIcons.webp' %}" alt="music-icon" />
-          </div>
+            <div id="welcome-message">
+                <h1>Welcome to</h1>
+                <h1>My Music App!</h1>
+            </div>
+            <div class="music-img">
+                <img src="{% static '/images/musicIcons.webp' %}" alt="music-icon" />
+            </div>
         </section>
 
         <section id="registerPage">
-          <form action="{% url 'home page' %}" method="post">
+            <form action="{% url 'create profile' %}" method="post">
             <fieldset>
-              <legend>Profile</legend>
+                <legend>Profile</legend>
 
-                {{ form }}
-                {% csrf_token %}
-                <button type="submit" class="register">Enter</button>
+                    {{ form }}
+                    {% csrf_token %}
+                    <button type="submit" class="register">Enter</button>
 
             </fieldset>
-          </form>
+            </form>
         </section>
-      </div>
+    </div>
 
 {% endblock %}
