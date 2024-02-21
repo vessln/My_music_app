@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -7,18 +8,7 @@ from my_music_app_project.common.views import get_current_profile
 from my_music_app_project.profiles.models import Profile
 
 
-class CreateAlbumView(views.CreateView):
-    model = Album
-    fields = ["album_name", "artist", "genre", "description", "image_url", "price"]
-    template_name = "album/album-add.html"
-    success_url = reverse_lazy("home page")
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["current_profile"] = get_current_profile()
-
-        return context
-
+class PrefilledFormViewMixin:
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
 
@@ -33,6 +23,13 @@ class CreateAlbumView(views.CreateView):
 
         return form
 
+
+class CreateAlbumView(PrefilledFormViewMixin, views.CreateView):
+    queryset = Album.objects.all()
+    fields = ["album_name", "artist", "genre", "description", "image_url", "price"]
+    template_name = "album/album-add.html"
+    success_url = reverse_lazy("home page")
+
     def form_valid(self, form):
         form.instance.owner = get_current_profile()
 
@@ -40,18 +37,11 @@ class CreateAlbumView(views.CreateView):
 
 
 class DetailsAlbumView(views.DetailView):
-    model = Album
+    queryset = Album.objects.all()
     template_name = "album/album-details.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["current_profile"] = get_current_profile()
-
-        return context
 
     # def get_queryset(self):
     #     queryset = super().get_queryset()
-    #
     #     album_pk = self.request.GET.get("pk", None)
     #     if album_pk is not None:
     #         queryset = queryset.filter(pk=album_pk)
@@ -59,17 +49,17 @@ class DetailsAlbumView(views.DetailView):
     #     return queryset
 
 
-class EditAlbumView(views.UpdateView):
-    model = Album
+class EditAlbumView(PrefilledFormViewMixin, views.UpdateView):
+    queryset = Album.objects.all()
     fields = ["album_name", "artist", "genre", "description", "image_url", "price"]
     template_name = "album/album-edit.html"
     success_url = reverse_lazy("home page")
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["current_profile"] = get_current_profile()
-
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context["current_profile"] = get_current_profile()
+    #
+    #     return context
 
 
 class DeleteAlbumView(views.DeleteView):
@@ -84,3 +74,9 @@ class DeleteAlbumView(views.DeleteView):
         context["form"] = DeleteAlbumForm(instance=self.get_object())
 
         return context
+
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs["instance"] = self.object
+    #     return kwargs
+
