@@ -1,6 +1,4 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views import generic as views
 
 from my_music_app_project.albums.forms import DeleteAlbumForm
@@ -24,8 +22,8 @@ class CreateAlbumView(views.CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class=form_class)
 
-        form.fields["album_name"].label = "Album Name"
-        form.fields['image_url'].label = "Image URL"
+        form.fields["album_name"].label = "Album Name"  # or verbose_name="Album Name" (in model's field 'album_name')
+        form.fields['image_url'].label = "Image URL"  # or verbose_name="Image URL" (in model's field 'image_url')
 
         form.fields["album_name"].widget.attrs["placeholder"] = "Album Name"
         form.fields["artist"].widget.attrs["placeholder"] = "Artist"
@@ -36,7 +34,8 @@ class CreateAlbumView(views.CreateView):
         return form
 
     def form_valid(self, form):
-        form.instance.owner = Profile.objects.first()
+        form.instance.owner = get_current_profile()
+
         return super().form_valid(form)
 
 
@@ -72,10 +71,6 @@ class EditAlbumView(views.UpdateView):
 
         return context
 
-    # def form_valid(self, form):
-    #     form.save()
-    #     return super().form_valid(form)
-
 
 class DeleteAlbumView(views.DeleteView):
     model = Album
@@ -89,10 +84,3 @@ class DeleteAlbumView(views.DeleteView):
         context["form"] = DeleteAlbumForm(instance=self.get_object())
 
         return context
-
-
-
-
-
-
-
