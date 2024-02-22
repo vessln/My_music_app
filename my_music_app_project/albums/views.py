@@ -1,4 +1,3 @@
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -55,16 +54,11 @@ class EditAlbumView(PrefilledFormViewMixin, views.UpdateView):
     template_name = "album/album-edit.html"
     success_url = reverse_lazy("home page")
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context["current_profile"] = get_current_profile()
-    #
-    #     return context
-
 
 class DeleteAlbumView(views.DeleteView):
-    model = Album
+    # model = Album
     # form_class = DeleteAlbumForm
+    queryset = Album.objects.all()
     template_name = "album/album-delete.html"
     success_url = reverse_lazy("home page")
 
@@ -75,7 +69,7 @@ class DeleteAlbumView(views.DeleteView):
 
         return context
 
-    # def get_form_kwargs(self):
+    # def get_form_kwargs(self):  # to prefill current form with data from DB
     #     kwargs = super().get_form_kwargs()
     #     kwargs["instance"] = self.object
     #     return kwargs

@@ -10,7 +10,7 @@ class CreateProfileForm(forms.ModelForm):
 
         widgets = {
             "username": forms.TextInput(attrs={"placeholder": "Username"}),
-            "email": forms.EmailInput(attrs={"placeholder": "Username"}),
-            "age": forms.NumberInput(attrs={"placeholder": "Username"}),
+            "email": forms.EmailInput(attrs={"placeholder": "Email"}),
+            "age": forms.NumberInput(attrs={"placeholder": "Age"}),
         }
 
